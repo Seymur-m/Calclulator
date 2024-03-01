@@ -2,59 +2,57 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-
 public class Calculator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
 
-        try {
-            String[] parts = input.split(" ");
-            if (parts.length != 3) {
-                throw new IllegalArgumentException("Invalid input format");
-            }
-
-            String first = parts[0];
-            String operation = parts[1];
-            String second = parts[2];
-
-            boolean isRoman = isRomanNumeral(first) && isRomanNumeral(second);
-            int num1 = isRoman ? romanToArabic(first) : Integer.parseInt(first);
-            int num2 = isRoman ? romanToArabic(second) : Integer.parseInt(second);
-
-            if (num1 < 1 || num1 > 10 || num2 < 1 || num2 > 10) {
-                throw new IllegalArgumentException("Input numbers must be between 1 and 10");
-            }
-
-            int result = 0;
-            switch (operation) {
-                case "+":
-                    result = num1 + num2;
-                    break;
-                case "-":
-                    result = num1 - num2;
-                    break;
-                case "*":
-                    result = num1 * num2;
-                    break;
-                case "/":
-                    result = num1 / num2;
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid operator");
-            }
-
-            if (isRoman) {
-                if (result < 1) {
-                    throw new IllegalArgumentException("Roman numerals cannot represent zero or negative numbers");
-                }
-                System.out.println(arabicToRoman(result));
-            } else {
-                System.out.println(result);
-            }
-
-        } catch (Exception e) {
+        String[] parts = input.split(" ");
+        if (parts.length != 3) {
             System.out.println("Output: throws Exception");
+            return;
+        }
+
+        String first = parts[0];
+        String operation = parts[1];
+        String second = parts[2];
+
+        boolean isRoman = isRomanNumeral(first) && isRomanNumeral(second);
+        int num1 = isRoman ? romanToArabic(first) : Integer.parseInt(first);
+        int num2 = isRoman ? romanToArabic(second) : Integer.parseInt(second);
+
+        if (num1 < 1 || num1 > 10 || num2 < 1 || num2 > 10) {
+            System.out.println("Output: throws Exception");
+            return;
+        }
+
+        int result = 0;
+        switch (operation) {
+            case "+":
+                result = num1 + num2;
+                break;
+            case "-":
+                result = num1 - num2;
+                break;
+            case "*":
+                result = num1 * num2;
+                break;
+            case "/":
+                result = num1 / num2;
+                break;
+            default:
+                System.out.println("Output: throws Exception");
+                return;
+        }
+
+        if (isRoman) {
+            if (result < 1) {
+                System.out.println("Output: throws Exception");
+                return;
+            }
+            System.out.println(arabicToRoman(result));
+        } else {
+            System.out.println(result);
         }
     }
 
