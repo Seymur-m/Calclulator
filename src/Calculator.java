@@ -6,11 +6,13 @@ public class Calculator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
+        System.out.println(calc(input));
+    }
 
+    public static String calc(String input) {
         String[] parts = input.split(" ");
         if (parts.length != 3) {
-            System.out.println("Output: throws Exception");
-            return;
+            throw new  IllegalArgumentException ("Output: throws Exception");
         }
 
         String first = parts[0];
@@ -22,37 +24,24 @@ public class Calculator {
         int num2 = isRoman ? romanToArabic(second) : Integer.parseInt(second);
 
         if (num1 < 1 || num1 > 10 || num2 < 1 || num2 > 10) {
-            System.out.println("Output: throws Exception");
-            return;
+            throw new  IllegalArgumentException ("Output: throws Exception");
         }
 
-        int result = 0;
-        switch (operation) {
-            case "+":
-                result = num1 + num2;
-                break;
-            case "-":
-                result = num1 - num2;
-                break;
-            case "*":
-                result = num1 * num2;
-                break;
-            case "/":
-                result = num1 / num2;
-                break;
-            default:
-                System.out.println("Output: throws Exception");
-                return;
-        }
+        int result = switch (operation) {
+            case "+" -> num1 + num2;
+            case "-" -> num1 - num2;
+            case "*" -> num1 * num2;
+            case "/" -> num1 / num2;
+            default -> throw new IllegalArgumentException("Output: throws Exception");
+        };
 
         if (isRoman) {
             if (result < 1) {
-                System.out.println("Output: throws Exception");
-                return;
+                throw new IllegalArgumentException("Output: throws Exception");
             }
-            System.out.println(arabicToRoman(result));
+            return arabicToRoman(result);
         } else {
-            System.out.println(result);
+            return String.valueOf(result);
         }
     }
 
